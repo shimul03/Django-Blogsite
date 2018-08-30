@@ -1,0 +1,32 @@
+
+{% extends 'base.html'%}
+{%load static%}
+{% block title%}welcome my new Blog {% endblock %}
+{% block stylesheet%}{% endblock%}
+{% block content%}
+
+
+	<!-- END #fh5co-header -->
+
+			{% for p in post %}
+				<article class="col-lg-3 col-md-3 col-sm-3 col-xs-6 col-xxs-12 animate-box">
+				<figure>
+					<a href="{% url 'single_post' id=p.id%}"><img src="{{p.image.url}}"  alt="Image" class="img-responsive"></a>
+				</figure>
+				<span class="fh5co-meta"><a href="{% url 'topic' name=p.category.name%}">{{p.category.name}}</a></span>
+				<h2 class="fh5co-article-title"><a href="{% url 'single_post' id=p.id%}">{{p.title}}</a></h2>
+				<span class="fh5co-meta fh5co-date">{{p.post_on}}</span>
+				</article>
+			{% endfor%}
+
+
+
+{% endblock%}
+
+{% block script%}
+
+{% endblock%}
+
+
+
+
