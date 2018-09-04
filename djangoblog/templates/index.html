@@ -15,7 +15,10 @@
 				</figure>
 				<span class="fh5co-meta"><a href="{% url 'topic' name=p.category.name%}">{{p.category.name}}</a></span>
 				<h2 class="fh5co-article-title"><a href="{% url 'single_post' id=p.id%}">{{p.title}}</a></h2>
-				<span class="fh5co-meta fh5co-date">{{p.post_on}}</span>
+				<h4><a href="{% url 'author' name=p.article_author.name.username %}">{{ p.article_author.name }}</a></h4>
+
+					<span class="fh5co-meta fh5co-date">{{p.post_on}}</span>
+
 				</article>
 			{% endfor%}
 

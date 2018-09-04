@@ -21,11 +21,11 @@
 {% block profile%}
 <div class="fh5co-bio">
 			<figure>
-				<img src="images/person1.jpg" alt="Free HTML5 Bootstrap Template" class="img-responsive">
+				<img src="{{auth.profile_picture.url}}" alt="Free HTML5 Bootstrap Template" class="img-responsive">
 			</figure>
 			<h3 class="heading">About Me</h3>
-			<h2>Emily Tran Le</h2>
-			<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
+			<h2>{{auth.name.get_full_name}}</h2>
+			<p>{{ auth.detais}} </p>
 			<ul class="fh5co-social">
 				<li><a href="#"><i class="icon-twitter"></i></a></li>
 				<li><a href="#"><i class="icon-facebook"></i></a></li>
@@ -37,18 +37,21 @@
 
 
 {% block content%}
-
-{% load static%}
-
-
-			<article class="col-lg-3 col-md-3 col-sm-3 col-xs-6 col-xxs-12 animate-box">
+<h2>Author:{{ auth.name}}</h2>
+{% for p in post %}
+	<article class="col-lg-3 col-md-3 col-sm-3 col-xs-6 col-xxs-12 animate-box">
 				<figure>
-					<a href="single.html"><img src="{% static 'images/pic_8.jpg'%}" alt="Image" class="img-responsive"></a>
+					<a href="{% url 'single_post' id=p.id %}"><img src="{{ p.image.url}}" alt="Image" class="img-responsive"></a>
 				</figure>
-				<span class="fh5co-meta"><a href="single.html">Travel</a>, <a href="single.html">Style</a></span>
-				<h2 class="fh5co-article-title"><a href="single.html">Boat Travel in The Vietnam River</a></h2>
-				<span class="fh5co-meta fh5co-date">March 6th, 2016</span>
+				<span class="fh5co-meta"><a href="{% url 'single_post' id=p.id %}">{{p.category}}</a></span>
+				<h2 class="fh5co-article-title"><a href="{% url 'single_post' id=p.id %}">{{p.title}}</a></h2>
+				<span class="fh5co-meta fh5co-date">{{p.post_on}}</span>
 			</article>
+
+{% endfor%}
+
+
+
 
 {% endblock%}
 
