@@ -2,6 +2,7 @@ from django.shortcuts import render, HttpResponse, get_object_or_404,redirect
 from .models import author,article,category
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.models import User
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 
 # Create your views here.
 
@@ -9,8 +10,12 @@ from django.contrib.auth.models import User
 def index(request):
 
     post=article.objects.all()
+    paginator = Paginator(post, 3)  # Show 25 contacts per page
+
+    page = request.GET.get('page')
+    total_article = paginator.get_page(page)
     context={
-        "post":post
+        "post":total_article
     }
     return render(request,"index.html",context)
 
@@ -43,8 +48,12 @@ def getsingle(request, id):
 def gettopic(request, name):
     cat=get_object_or_404(category,name=name)
     post=article.objects.filter(category=cat.id)
+    paginator = Paginator(post, 3)  # Show 25 contacts per page
 
-    return  render(request, "category.html",{"post":post,"cat":cat})
+    page = request.GET.get('page')
+    total_article = paginator.get_page(page)
+
+    return  render(request, "category.html",{"post":total_article,"cat":cat})
 
 def getlogin(request):
     if request.user.is_authenticated:
